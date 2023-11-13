@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>杭州地图</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=74c1194ee8f6830d36f536df75adac1f"></script>
+    <script src="https://webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
+    <style>
+        #container {
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        // 创建地图
+        var map = new AMap.Map('container', {
+            zoom: 11, // 设置地图缩放级别
+            center: [120.1551, 30.2741] // 设置地图中心点坐标为杭州的经纬度
+        });
+
+        AMapUI.load(['ui/geo/DistrictExplorer'], function(DistrictExplorer) {
+            // 创建一个实例
+            var districtExplorer = new DistrictExplorer({
+                eventSupport: true, // 打开事件支持
+                map: map
+            });
+
+            // 加载杭州市的行政区划节点
+            districtExplorer.loadAreaNode(330100, function(error, areaNode) {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+
+                // 渲染杭州市的边界
+                districtExplorer.renderSubFeatures(areaNode, function(feature, i) {
+                    return {
+                        cursor: 'default',
+                        bubble: true,
+                        strokeColor: '#3366cc', // 线颜色
+                        strokeOpacity: 1, // 线透明度
+                        strokeWeight: 1, // 线宽
+                        fillColor: '#3366cc', // 填充色
+                        fillOpacity: 0.35, // 填充透明度
+                    };
+                });
+            });
+        });
+    </script>
+</body>
+</html>

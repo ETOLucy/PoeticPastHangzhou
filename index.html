@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>杭州地图</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=74c1194ee8f6830d36f536df75adac1f"></script>
+    <script src="https://webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
+    <link rel="icon" href="/static/ico/logo.ico"/>
+    <style>
+        #container {
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        // 创建地图
+        var map = new AMap.Map('container', {
+            zoom: 11, // 设置地图缩放级别
+            center: [120.1551, 30.2741] // 设置地图中心点坐标为杭州的经纬度
+        });
+
+        AMapUI.load(['ui/geo/DistrictExplorer'], function(DistrictExplorer) {
+            // 创建一个实例
+            var districtExplorer = new DistrictExplorer({
+                eventSupport: true, // 打开事件支持
+                map: map
+            });
+
+            // 加载杭州市的行政区划节点
+            districtExplorer.loadAreaNode(330100, function(error, areaNode) {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+
+                // 渲染杭州市的行政区划边界
+                districtExplorer.renderSubFeatures(areaNode, function(feature, i) {
+                    return {
+                        cursor: 'default',
+                        bubble: true,
+                        strokeColor: '#3366cc', // 线颜色
+                        strokeOpacity: 1, // 线透明度
+                        strokeWeight: 1, // 线宽
+                        fillColor: '#3366cc', // 填充色
+                        fillOpacity: 0.35, // 填充透明度
+                    };
+                });
+
+                var famousPlaces = [
+                    { name: '西湖', location: [120.1431, 30.2369] },
+                    { name: '雷峰塔', location: [120.1673, 30.2417] },
+                    { name: '灵隐寺', location: [120.1032, 30.2446] },
+                    { name: '杭州城隍阁', location: [120.1682, 30.2586] },
+                    { name: '六和塔', location: [120.2117, 30.2670] },
+                    { name: '钱塘江大潮观音景区', location: [120.5015, 30.1876] },
+                    { name: '茅家埠', location: [119.9864, 30.1816] },
+                    { name: '宋城景区', location: [120.2051, 30.2722] },
+                    { name: '千岛湖', location: [119.0466, 29.4562] },
+                    { name: '岳飞庙', location: [120.1429, 30.2467] },
+                    { name: '南宋御街', location: [120.1755, 30.2431] },
+                    { name: '河坊街', location: [120.1687, 30.2506] },
+                    { name: '宝石山', location: [120.1836, 30.2381] },
+                    { name: '杭州历史博物馆', location: [120.1696, 30.2464] },
+                    // 添加更多景点...
+                ];
+
+
+                // 在地图上显示著名景点
+                famousPlaces.forEach(function(place) {
+                    var marker = new AMap.Marker({
+                        position: place.location,
+                        map: map,
+                        title: place.name, // 鼠标悬停时显示的标题
+                        label: {
+                            content: place.name, // 显示的标签文本
+                            offset: new AMap.Pixel(20, -10) // 标签的偏移量
+                        }
+                    });
+
+                    // 为每个标记添加点击事件
+                    marker.on('click', function (event) {
+                        // 根据景点信息执行页面跳转
+                        switch (place.name) {
+                            case '西湖':
+                                window.location.href = 'xihu.html';
+                                break;
+                            case '雷峰塔':
+                                window.location.href = 'leifengta.html';
+                                break;
+                            case '灵隐寺':
+                                window.location.href = 'lingyinsi.html';
+                                break;
+                            case '杭州城隍阁':
+                                window.location.href = 'chenghuangge.html';
+                                break;
+                            case '六和塔':
+                                window.location.href = 'liuheta.html';
+                                break;
+                            case '钱塘江大潮观音景区':
+                                window.location.href = 'qiantangjiang.html';
+                                break;
+                            case '茅家埠':
+                                window.location.href = 'maojiabu.html';
+                                break;
+                            case '宋城景区':
+                                window.location.href = 'songcheng.html';
+                                break;
+                            case '千岛湖':
+                                window.location.href = 'qiandaohu.html';
+                                break;
+                            case '岳飞庙':
+                                window.location.href = 'yuefeimiao.html';
+                                break;
+                            case '南宋御街':
+                                window.location.href = 'nansongyujie.html';
+                                break;
+                            case '河坊街':
+                                window.location.href = 'hefangjie.html';
+                                break;
+                            case '宝石山':
+                                window.location.href = 'baoshishan.html';
+                                break;
+                            case '杭州历史博物馆':
+                                window.location.href = 'hzbwg.html';
+                                break;
+                            // 添加更多景点的跳转逻辑...
+                            default:
+                                console.log('Unknown place:', place);
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

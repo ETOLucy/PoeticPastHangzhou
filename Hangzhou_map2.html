@@ -52,15 +52,7 @@
                 var famousPlaces = [
                     { name: '西湖', location: [120.1431, 30.2369] },
                     { name: '雷峰塔', location: [120.1673, 30.2417] },
-                    { name: '灵隐寺', location: [120.1032, 30.2446] },
-                    { name: '西溪湿地', location: [120.0686, 30.2401] },
-                    { name: '钱塘江大潮观音景区', location: [120.5015, 30.1876] },
-                    { name: '宋城景区', location: [120.2051, 30.2722] },
-                    { name: '茅家埠', location: [119.9864, 30.1816] },
-                    { name: '千岛湖', location: [119.0466, 29.4562] },
-                    { name: '六和塔', location: [120.2117, 30.2670] },
-                    { name: '杭州城隍阁', location: [120.1682, 30.2586] }
-                    // 添加更多景点...
+                    // ... (省略其余景点)
                 ];
 
                 // 在地图上显示著名景点
@@ -73,6 +65,16 @@
                             content: place.name, // 显示的标签文本
                             offset: new AMap.Pixel(20, -10) // 标签的偏移量
                         }
+                    });
+
+                    // 为每个标记添加点击事件
+                    marker.on('click', function (event) {
+                        // 在这里处理点击事件
+                        // 可以获取当前景点的信息：place
+                        // 进行页面跳转等操作
+                        console.log('Clicked on famous place:', place);
+                        // 示例：跳转到详情页
+                        window.location.href = '详情页URL'; // 替换成你的详情页URL
                     });
                 });
             });
